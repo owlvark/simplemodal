@@ -83,7 +83,6 @@
 	};
 	browser.ie6 = browser.msie && /msie 6./.test(ua) && typeof window['XMLHttpRequest'] !== 'object';
 	browser.ie7 = browser.msie && /msie 7.0/.test(ua);
-	browser.boxModel = (document.compatMode === "CSS1Compat");
 
 	/*
 	 * Create and display a modal dialog.
