@@ -369,11 +369,6 @@
 
 			s.setContainerDimensions();
 			s.d.data.appendTo(s.d.wrap);
-
-			// fix issues with IE
-			if (browser.ie6 || browser.ieQuirks) {
-				s.fixIE();
-			}
 		},
 		/*
 		 * Bind events
@@ -414,10 +409,7 @@
 				// reposition the dialog
 				s.o.autoResize ? s.setContainerDimensions() : s.o.autoPosition && s.setPosition();
 
-				if (browser.ie6 || browser.ieQuirks) {
-					s.fixIE();
-				}
-				else if (s.o.modal) {
+				if (s.o.modal) {
 					// update the iframe & overlay
 					s.d.iframe && s.d.iframe.css({height: w[0], width: w[1]});
 					s.d.overlay.css({height: d[0], width: d[1]});
@@ -432,58 +424,6 @@
 			doc.unbind('keydown.simplemodal');
 			wndw.unbind('.simplemodal');
 			this.d.overlay.unbind('click.simplemodal');
-		},
-		/*
-		 * Fix issues in IE6 and IE7 in quirks mode
-		 */
-		fixIE: function () {
-			var s = this, p = s.o.position;
-
-			// simulate fixed position - adapted from BlockUI
-			$.each([s.d.iframe || null, !s.o.modal ? null : s.d.overlay, s.d.container.css('position') === 'fixed' ? s.d.container : null], function (i, el) {
-				if (el) {
-					var bch = 'document.body.clientHeight', bcw = 'document.body.clientWidth',
-						bsh = 'document.body.scrollHeight', bsl = 'document.body.scrollLeft',
-						bst = 'document.body.scrollTop', bsw = 'document.body.scrollWidth',
-						ch = 'document.documentElement.clientHeight', cw = 'document.documentElement.clientWidth',
-						sl = 'document.documentElement.scrollLeft', st = 'document.documentElement.scrollTop',
-						s = el[0].style;
-
-					s.position = 'absolute';
-					if (i < 2) {
-						s.removeExpression('height');
-						s.removeExpression('width');
-						s.setExpression('height','' + bsh + ' > ' + bch + ' ? ' + bsh + ' : ' + bch + ' + "px"');
-						s.setExpression('width','' + bsw + ' > ' + bcw + ' ? ' + bsw + ' : ' + bcw + ' + "px"');
-					}
-					else {
-						var te, le;
-						if (p && p.constructor === Array) {
-							var top = p[0]
-								? typeof p[0] === 'number' ? p[0].toString() : p[0].replace(/px/, '')
-								: el.css('top').replace(/px/, '');
-							te = top.indexOf('%') === -1
-								? top + ' + (t = ' + st + ' ? ' + st + ' : ' + bst + ') + "px"'
-								: parseInt(top.replace(/%/, '')) + ' * ((' + ch + ' || ' + bch + ') / 100) + (t = ' + st + ' ? ' + st + ' : ' + bst + ') + "px"';
-
-							if (p[1]) {
-								var left = typeof p[1] === 'number' ? p[1].toString() : p[1].replace(/px/, '');
-								le = left.indexOf('%') === -1
-									? left + ' + (t = ' + sl + ' ? ' + sl + ' : ' + bsl + ') + "px"'
-									: parseInt(left.replace(/%/, '')) + ' * ((' + cw + ' || ' + bcw + ') / 100) + (t = ' + sl + ' ? ' + sl + ' : ' + bsl + ') + "px"';
-							}
-						}
-						else {
-							te = '(' + ch + ' || ' + bch + ') / 2 - (this.offsetHeight / 2) + (t = ' + st + ' ? ' + st + ' : ' + bst + ') + "px"';
-							le = '(' + cw + ' || ' + bcw + ') / 2 - (this.offsetWidth / 2) + (t = ' + sl + ' ? ' + sl + ' : ' + bsl + ') + "px"';
-						}
-						s.removeExpression('top');
-						s.removeExpression('left');
-						s.setExpression('top', te);
-						s.setExpression('left', le);
-					}
-				}
-			});
 		},
 		/*
 		 * Place focus on the first or last visible input
