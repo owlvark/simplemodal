@@ -78,7 +78,6 @@
 		w = [];
 
 	var browser = {
-		ieQuirks: null,
 		msie: /msie/.test(ua) && !/opera/.test(ua),
 		opera: /opera/.test(ua)
 	};
@@ -237,8 +236,6 @@
 			if (s.d.data) {
 				return false;
 			}
-
-			browser.ieQuirks = browser.msie && !browser.boxModel;
 
 			// merge defaults and user options
 			s.o = $.extend({}, $.modal.defaults, options);
