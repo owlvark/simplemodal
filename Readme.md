@@ -1,3 +1,10 @@
+Fork Notes
+------
+
+* Reduced file size and complexity by not supporting IE6 and IE7 (version 1.4.5-patched)
+
+
+
 > **NOTICE**
  
 > I am no longer able to actively support or maintain SimpleModal. If you would like to become a contributor, drop me a line. Otherwise, I will be removing this project in the near future.
