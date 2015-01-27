@@ -1,8 +1,10 @@
 Fork Notes
 ------
 
-* Reduced file size and complexity by not supporting IE6 and IE7 (version 1.4.5-patched)
+version 1.4.5-patch1
+* Reduced file size and complexity by not supporting IE6 and IE7
 
+------
 
 
 > **NOTICE**
